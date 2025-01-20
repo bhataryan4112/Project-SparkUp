@@ -12,16 +12,17 @@
 
 ## Tech Stack  
 ### **Frontend**  
-- HTML, CSS, JavaScript  
+- HTML, CSS, JavaScript
 - User-focused design with dynamic loaders and an intuitive interface  
 - Questionnaire for personality assessment  
 
 ### **Backend**  
-- PHP with Google App Scripts for database integration  
+- PHP with Google App Scripts for database integration
+- SQL Databases for Data management
 - Google Sheets API for storing and managing user data  
 - OTP-based email verification using PHPMailer  
 - Logic for table timer, partner details retrieval, and feedback collection
-- SQL Databases for Data management
+- Jupyter Notebook
 
 ### **Algorithm**  
 - Proposed **Euclidean Distance** for personality-based matching  
@@ -37,4 +38,4 @@
 ## Installation & Setup  
 1. Clone this repository:  
    ```bash
-   git clone https://github.com/your-username/Project-SparkUp.git
+   git clone https://github.com/AryaChavan838181/Project_SparkUp.git
