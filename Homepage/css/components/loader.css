@@ -1,0 +1,147 @@
+.loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--happn-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.logo-container {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('../assets/images/sparkup-logo.png') center/contain no-repeat;
+  opacity: 0.1;
+  filter: blur(10px);
+  animation: rotate 20s linear infinite;
+}
+
+.logo-main {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('../assets/images/sparkup-logo.png') center/contain no-repeat;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.logo-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  animation: pulseFade 2s infinite ease-in-out;
+  z-index: 2;
+}
+
+.logo-glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--happn-red) 0%, transparent 70%);
+  opacity: 0.2;
+  animation: glowPulse 2s infinite ease-in-out;
+}
+
+.loader-content {
+  text-align: center;
+}
+
+.loader-logo {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
+  animation: pulseFade 2s infinite ease-in-out;
+}
+
+.loader-text {
+  font-family: 'Montserrat', sans-serif;
+  color: #00ff9d; /* Changed to bright green */
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  animation: blink 1.5s infinite;
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.5); /* Added glow effect */
+}
+
+@keyframes pulseFade {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0% { transform: scale(1); opacity: 0.2; }
+  50% { transform: scale(1.2); opacity: 0.1; }
+  100% { transform: scale(1); opacity: 0.2; }
+}
+
+.loader-wrapper.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-wrapper.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.2);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.8s;
+}
+
+/* Add page transition effect */
+.page-content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+.page-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
