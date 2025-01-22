@@ -39,3 +39,5 @@
 1. Clone this repository:  
    ```bash
    git clone https://github.com/AryaChavan838181/Project_SparkUp.git
+
+2. Setup
