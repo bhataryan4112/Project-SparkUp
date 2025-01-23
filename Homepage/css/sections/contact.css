@@ -1,0 +1,113 @@
+.contact-section {
+  padding: 120px 0;
+  background: linear-gradient(135deg, var(--happn-dark), #1a0f2e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-container {
+  max-width: 600px;
+  width: 90%;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.contact-header {
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(to right, rgba(255, 68, 88, 0.1), rgba(0, 198, 255, 0.1));
+}
+
+.contact-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: var(--happn-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contact-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.contact-form {
+  padding: 40px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--happn-light);
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  color: var(--happn-light);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: var(--font-primary);
+  letter-spacing: 0.5px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--happn-red);
+  box-shadow: 0 0 0 3px rgba(255, 68, 88, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: grey;
+  border: none;
+  border-radius: 15px;
+  color: rgb(5, 5, 5);
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  font-family: var(--font-primary);
+  letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 68, 88, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-container {
+    width: 95%;
+  }
+  
+  .contact-header {
+    padding: 30px 20px;
+  }
+  
+  .contact-form {
+    padding: 30px 20px;
+  }
+}
