@@ -1,0 +1,687 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
+:root {
+    --dark-bg: #121212;
+    --card-bg: #1E1E1E;
+    --primary-color: #7289DA;
+    --text-color: #FFFFFF;
+    --border-color: #333333;
+    --gradient-start: #120019;
+    --gradient-end: #362537;
+    --theme-blue: #00BCD4;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url('doodle.jpg') center/cover fixed;
+    color: var(--text-color);
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Dark overlay for better readability */
+    z-index: -1;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 4rem auto 2rem; /* Changed from 2rem auto to add top spacing */
+    padding: 2rem;
+    background: rgba(0,0,0,0.85); /* Slightly more opaque background */
+    border-radius: 8px;
+    backdrop-filter: blur(5px); /* Add subtle blur effect */
+}
+
+.progress-container {
+    width: 100%;
+    height: 15px; /* Increased height */
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* Add padding and box shadow for better visibility */
+    padding: 2px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, 
+        var(--primary-color), 
+        #9f7aea, 
+        var(--primary-color)
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite linear;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 20px rgba(114, 137, 218, 0.5);
+    border-radius: 0 5px 5px 0;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    animation: shine 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.form-section {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.form-section.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group label {
+    position: absolute;
+    left: 1.5rem;
+    top: -0.8rem;
+    background: var(--card-bg);
+    padding: 0 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    pointer-events: none;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #666;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 25px;
+    font-family: 'Orbitron', sans-serif;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+/* Fix for number input */
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input:focus, select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 10px rgba(114, 137, 218, 0.3);
+}
+
+.btn {
+    background: transparent;
+    border: 2px solid #fff;
+    padding: 0.5rem 2rem;
+    margin: 1rem 0.5rem;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.btn:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(114, 137, 218, 0.3);
+}
+
+.question-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    border: 2px solid #444;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.question-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.question-card h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 25px;
+    border: 2px solid #666;
+    position: relative;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.radio-option:hover {
+    border-color: var(--primary-color);
+    background: rgba(114, 137, 218, 0.1);
+    transform: translateY(-2px);
+}
+
+.radio-option input[type="radio"] {
+    display: none;
+}
+
+.radio-option input[type="radio"]:checked + .custom-radio {
+    display: block !important;
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* New styles for colored options */
+.radio-option input[type="radio"][value="5"]:checked ~ span {
+    background-color: rgb(0, 53, 0);
+    border-color: #0f0;
+    color: #fff;
+}
+
+.radio-option input[type="radio"][value="4"]:checked ~ span {
+    background-color: #3a521f;
+    border-color: #8bc34a;
+    color: #fff;
+}
+
+.radio-option input[type="radio"][value="3"]:checked ~ span {
+    background-color: #726500;
+    border-color: #ffee00;
+    color: #fff;
+}
+
+.radio-option input[type="radio"][value="2"]:checked ~ span {
+    background-color: #563d5b;
+    border-color: #ce93d8;
+    color: #fff;
+}
+
+.radio-option input[type="radio"][value="1"]:checked ~ span {
+    background-color: #481252;
+    border-color: #9c27b0;
+    color: #fff;
+}
+
+.radio-option input[type="radio"][value="5"]:hover ~ span {
+    border-color: #0f0;
+    color: #0f0;
+}
+
+.radio-option input[type="radio"][value="4"]:hover ~ span {
+    border-color: #8bc34a;
+    color: #8bc34a;
+}
+
+.radio-option input[type="radio"][value="3"]:hover ~ span {
+    border-color: #ffd900;
+    color: #ffd900;
+}
+
+.radio-option input[type="radio"][value="2"]:hover ~ span {
+    border-color: #ce93d8;
+    color: #ce93d8;
+}
+
+.radio-option input[type="radio"][value="1"]:hover ~ span {
+    border-color: #9c27b0;
+    color: #9c27b0;
+}
+
+.custom-radio {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    display: inline-block;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.radio-option input[type="radio"]:checked + .custom-radio {
+    background: var(--primary-color);
+    box-shadow: 0 0 10px rgba(114, 137, 218, 0.5);
+    border-color: var(--primary-color);
+}
+
+.radio-option input[type="radio"]:checked + .custom-radio::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 3px;
+}
+
+.hidden {
+    display: none;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.error {
+    border-color: #ff4444 !important;
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 1rem;
+    }
+    
+    .question-card {
+        padding: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+    
+    .radio-group {
+        gap: 0.75rem;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 0 0px;
+    }
+    
+    .form-section {
+        padding: 1.5rem;
+    }
+}
+
+/* New error-card styles */
+.error-card {
+    border-color: #ff4444 !important;
+    animation: errorShake 0.5s ease;
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+}
+
+@keyframes errorShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.error-card:hover {
+    border-color: #ff4444 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
+}
+
+/* Update existing radio-option styles to handle error state */
+.error-card .radio-option {
+    border-color: rgba(255, 68, 68, 0.5);
+}
+
+/* Add these styles for popups and email verification */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.popup-content {
+    background: var(--card-bg);
+    padding: 3rem;
+    border-radius: 20px;
+    max-width: 550px;
+    width: 90%;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    transform: scale(0.8) translateY(-20px);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.popup-overlay.active .popup-content {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.popup-header {
+    margin-bottom: 2rem;
+}
+
+.popup-title {
+    color: var(--theme-blue);
+    font-size: 1.75rem; /* Reduced from 2rem */
+    font-weight: 600;
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.instruction-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.instruction-list li {
+    padding: 0.75rem 1.25rem; /* Slightly reduced padding */
+    margin-bottom: 0.75rem; /* Reduced margin */
+    font-size: 0.95rem; /* Reduced from 1.1rem */
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 2rem; /* Reduced left padding */
+}
+
+.instruction-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0.5rem; /* Adjusted position */
+    color: var(--theme-blue);
+    font-weight: bold;
+    font-size: 1rem; /* Reduced from 1.2rem */
+}
+
+.popup-button {
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'SF Pro Display', 'Segoe UI', sans-serif;
+}
+
+.proceed-btn {
+    background: var(--theme-blue);
+    color: white;
+}
+
+.proceed-btn:hover {
+    background: #0095a8;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+}
+
+.cancel-btn {
+    background: #ff4444;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background: #cc0000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(204, 0, 0, 0.3);
+}
+
+.btn#submitBtn {
+    background: var(--theme-blue);
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.btn#submitBtn:hover:not(:disabled) {
+    background: #0095a8;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+}
+
+.btn#submitBtn:disabled {
+    background: #666;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.theme-color {
+    background: transparent;
+    color: var(--theme-blue);
+    padding: 0;
+    margin: 0 0 2rem 0;
+    border-radius: 0;
+}
+
+.email-verification-section {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.otp-section {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* ...existing code... */
+
+.email-verification-section {
+    background: var(--card-bg);
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+}
+
+.email-verification-section h3 {
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.otp-section {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.otp-section .btn {
+    margin: 0;
+    flex: 1;
+}
+
+.otp-section .form-group {
+    flex: 2;
+}
+
+/* ...rest of existing code... */
+
+/* New styles for fun fact textarea and loading animations */
+.fun-fact-textarea {
+    width: 100%;
+    min-height: 120px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #666;
+    color: white;
+    padding: 1rem;
+    border-radius: 15px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    resize: vertical;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.fun-fact-textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 10px rgba(114, 137, 218, 0.3);
+}
+
+.loader {
+    display: none;
+    width: 24px;
+    height: 24px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+.verify-btn {
+    display: none;
+}
+
+/* New styles for welcome popup */
+.welcome-popup {
+    max-width: 600px;
+}
+
+.instruction-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.instruction-list li {
+    padding: 1.8rem;
+    margin-bottom: 1rem;
+    background: rgba(114, 137, 218, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.instruction-list li::before {
+    content: '→';
+    margin-right: 0.5rem;
+    color: var(--primary-color);
+    font-weight: bold;
+}
