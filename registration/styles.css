@@ -449,6 +449,7 @@ input:focus, select:focus {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+
 }
 
 .popup-content {

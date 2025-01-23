@@ -3,6 +3,7 @@ const totalSections = 5;
 let isOtpVerified = false;
 let isWelcomePopupClosed = false;
 
+
 // Update questions array with all questions from old_index.html
 const questions = [
     "I enjoy exploring new ideas and concepts.",
@@ -77,7 +78,7 @@ function generateQuestions() {
         if(section === 5) {
             sectionDiv.innerHTML += `
                 <div class="email-verification-section">
-                    <h3>Share something interesting about yourself (Optional)</h3>
+                    <h3>Share omething interesting about yourself (Optional)</h3>
                     <div class="form-group">
                         <label for="funFact">Fun Fact</label>
                         <textarea id="funFact" 
@@ -353,6 +354,16 @@ function sendOTP() {
         document.getElementById('sendOtpBtn').style.display = 'block';
         document.getElementById('otpLoader').style.display = 'none';
     });
+    // Simulate API call delay
+    setTimeout(() => {
+        // Hide loader
+        document.getElementById('otpLoader').style.display = 'none';
+        // Show verify button and OTP field
+        document.getElementById('verifyOtpBtn').style.display = 'block';
+        document.getElementById('otp').style.display = 'block';
+        // Show OTP sent popup
+        showOtpPopup('otpSentPopup');
+    }, 2000);
 }
 
 function verifyOTP() {
@@ -380,6 +391,17 @@ function verifyOTP() {
             document.getElementById('submitBtn').disabled = false;
             document.getElementById('verifyOtpBtn').style.display = 'none';
             document.getElementById('otp').disabled = true;
+    // Simulate verification delay
+    setTimeout(() => {
+        // Hide loader
+        document.getElementById('verifyLoader').style.display = 'none';
+        
+        if (otp === '1234') {
+            isOtpVerified = true; // Set verification status
+            showOtpPopup('otpVerifiedPopup');
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('verifyOtpBtn').style.display = 'none'; // Hide verify button
+            document.getElementById('otp').disabled = true; // Disable OTP input
         } else {
             showOtpPopup('otpErrorPopup');
             document.getElementById('verifyOtpBtn').style.display = 'block';
@@ -511,6 +533,19 @@ function submitForm() {
         console.error('Submission Error:', error);
         alert('An error occurred while submitting the form. Please check console for details.');
     });
+    }, 1500);
+}
+
+function showOtpPopup(popupId) {
+    document.getElementById(popupId).classList.add('active');
+}
+
+function closeOtpPopup(popupId) {
+    document.getElementById(popupId).classList.remove('active');
+}
+
+function closeWelcomePopup() {
+    document.getElementById('welcomePopup').classList.remove('active');
 }
 
 // Initialize the form
@@ -529,5 +564,9 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         console.log('Form submission started');
         submitForm();
+        if(validateAllQuestions()) {
+            // Handle successful form submission here
+            alert('Form submitted successfully!');
+        }
     });
 });
