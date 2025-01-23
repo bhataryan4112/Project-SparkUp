@@ -438,15 +438,18 @@ input:focus, select:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 9999;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+    pointer-events: none;
 }
 
 .popup-overlay.active {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
+
 }
 
 .popup-content {
@@ -456,6 +459,14 @@ input:focus, select:focus {
     max-width: 550px;
     width: 90%;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    transform: scale(0.8) translateY(-20px);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.popup-overlay.active .popup-content {
+    transform: scale(1) translateY(0);
+    opacity: 1;
 }
 
 .popup-header {
@@ -515,6 +526,17 @@ input:focus, select:focus {
     background: #0095a8;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+}
+
+.cancel-btn {
+    background: #ff4444;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background: #cc0000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(204, 0, 0, 0.3);
 }
 
 .btn#submitBtn {

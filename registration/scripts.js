@@ -1,6 +1,8 @@
 let currentSection = 1;
 const totalSections = 5;
 let isOtpVerified = false;
+let isWelcomePopupClosed = false;
+
 
 // Update questions array with all questions from old_index.html
 const questions = [
@@ -125,6 +127,10 @@ function generateQuestions() {
 }
 
 function nextSection(section) {
+    if (!isWelcomePopupClosed) {
+        alert('Please click "Let\'s Begin" to start the registration.');
+        return;
+    }
     if (!validateSection(section)) return;
     
     document.getElementById(`section${section}`).classList.add('hidden');
@@ -139,6 +145,10 @@ function nextSection(section) {
 }
 
 function prevSection(section) {
+    if (!isWelcomePopupClosed) {
+        alert('Please click "Let\'s Begin" to start the registration.');
+        return;
+    }
     document.getElementById(`section${section}`).classList.add('hidden');
     document.getElementById(`section${section - 1}`).classList.remove('hidden');
     currentSection = section - 1;
@@ -316,6 +326,34 @@ function sendOTP() {
     document.getElementById('sendOtpBtn').style.display = 'none';
     document.getElementById('otpLoader').style.display = 'block';
     
+    const formData = new FormData();
+    formData.append('email', email);
+
+    fetch('send_otp.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Hide loader
+        document.getElementById('otpLoader').style.display = 'none';
+        
+        if (data.success) {
+            // Show verify button and OTP field
+            document.getElementById('verifyOtpBtn').style.display = 'block';
+            document.getElementById('otp').style.display = 'block';
+            showOtpPopup('otpSentPopup');
+        } else {
+            alert('Failed to send OTP: ' + data.message);
+            document.getElementById('sendOtpBtn').style.display = 'block';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to send OTP. Please try again.');
+        document.getElementById('sendOtpBtn').style.display = 'block';
+        document.getElementById('otpLoader').style.display = 'none';
+    });
     // Simulate API call delay
     setTimeout(() => {
         // Hide loader
@@ -335,6 +373,24 @@ function verifyOTP() {
     document.getElementById('verifyOtpBtn').style.display = 'none';
     document.getElementById('verifyLoader').style.display = 'block';
     
+    const formData = new FormData();
+    formData.append('otp', otp);
+
+    fetch('verify_otp.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Hide loader
+        document.getElementById('verifyLoader').style.display = 'none';
+        
+        if (data.success) {
+            isOtpVerified = true;
+            showOtpPopup('otpVerifiedPopup');
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('verifyOtpBtn').style.display = 'none';
+            document.getElementById('otp').disabled = true;
     // Simulate verification delay
     setTimeout(() => {
         // Hide loader
@@ -350,6 +406,133 @@ function verifyOTP() {
             showOtpPopup('otpErrorPopup');
             document.getElementById('verifyOtpBtn').style.display = 'block';
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to verify OTP. Please try again.');
+        document.getElementById('verifyOtpBtn').style.display = 'block';
+        document.getElementById('verifyLoader').style.display = 'none';
+    });
+}
+
+function showOtpPopup(popupId) {
+    // First, hide all popups
+    const popups = document.querySelectorAll('.popup-overlay');
+    popups.forEach(popup => popup.classList.remove('active'));
+    
+    // Then show the requested popup
+    const popup = document.getElementById(popupId);
+    if (popup) {
+        popup.classList.add('active');
+    }
+}
+
+function closeOtpPopup(popupId) {
+    const popup = document.getElementById(popupId);
+    if (popup) {
+        popup.classList.remove('active');
+    }
+}
+
+function closeWelcomePopup() {
+    const welcomePopup = document.getElementById('welcomePopup');
+    if (welcomePopup) {
+        welcomePopup.classList.remove('active');
+        isWelcomePopupClosed = true;
+        document.querySelector('.container').style.display = 'block';
+    }
+}
+
+function calculateCategoryScores() {
+    const categories = {
+        category1: [1, 2, 3, 4],
+        category2: [5, 6, 7, 8],
+        category3: [9, 10, 11, 12],
+        category4: [13, 14, 15, 16],
+        category5: [17, 18, 19, 20]
+    };
+
+    const scores = {};
+
+    // Calculate average for each category
+    for (let category in categories) {
+        const questions = categories[category];
+        let sum = 0;
+        questions.forEach(qNum => {
+            const selected = document.querySelector(`input[name="q${qNum}"]:checked`);
+            if (selected) {
+                sum += parseInt(selected.value);
+            }
+        });
+        scores[category] = Math.round((sum / 4) * 100) / 100; // Average rounded to 2 decimal places
+    }
+
+    return scores;
+}
+
+function submitForm() {
+    if (!validateAllQuestions()) return;
+
+    // Debug logs
+    console.log('Form validation passed, preparing to submit...');
+
+    // Get form data
+    const formData = {
+        name: document.getElementById('name').value,
+        age: document.getElementById('age').value,
+        gender: document.getElementById('gender').value,
+        campus: document.getElementById('campus').value,
+        email: document.getElementById('email').value,
+        funFact: document.getElementById('funFact').value || ''
+    };
+
+    // Calculate and add category scores
+    const categoryScores = calculateCategoryScores();
+    Object.assign(formData, {
+        category1: categoryScores.category1,
+        category2: categoryScores.category2,
+        category3: categoryScores.category3,
+        category4: categoryScores.category4,
+        category5: categoryScores.category5
+    });
+
+    console.log('Sending data:', formData);
+
+    // Send to server with correct URL and method
+    fetch('https://thegroup11.com/registration/submit.php', { // Updated URL
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Origin': window.location.origin
+        },
+        mode: 'cors', // Add CORS mode
+        credentials: 'include',
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        console.log('Raw Response:', response);
+        if (!response.ok) {
+            return response.text().then(text => {
+                console.error('Error Response:', text);
+                throw new Error(`Server error: ${response.status}`);
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Parsed Response:', data);
+        if (data.success) {
+            alert('Registration completed successfully!');
+            window.location.href = 'success.html';
+        } else {
+            throw new Error(data.message || 'Unknown error occurred');
+        }
+    })
+    .catch(error => {
+        console.error('Submission Error:', error);
+        alert('An error occurred while submitting the form. Please check console for details.');
+    });
     }, 1500);
 }
 
@@ -371,11 +554,16 @@ document.addEventListener('DOMContentLoaded', () => {
     setupErrorClearance();
     updateProgress(); // Initialize progress bar
     
+    // Hide the form container initially
+    document.querySelector('.container').style.display = 'none';
+    
     // Show welcome popup by default (it's already active in HTML)
     document.getElementById('welcomePopup').classList.add('active');
     
     document.getElementById('registrationForm').addEventListener('submit', (e) => {
         e.preventDefault();
+        console.log('Form submission started');
+        submitForm();
         if(validateAllQuestions()) {
             // Handle successful form submission here
             alert('Form submitted successfully!');
