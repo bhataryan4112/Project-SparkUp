@@ -449,7 +449,6 @@ input:focus, select:focus {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-
 }
 
 .popup-content {
@@ -685,4 +684,133 @@ input:focus, select:focus {
     margin-right: 0.5rem;
     color: var(--primary-color);
     font-weight: bold;
+}
+
+/* ...existing code... */
+
+.otp-verification {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.otp-input-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+#resendTimer {
+    color: var(--text-color);
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.verification-status {
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.verification-status.success {
+    color: #4CAF50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.verification-status.error {
+    color: #f44336;
+    background: rgba(244, 67, 54, 0.1);
+}
+
+.verified {
+    border-color: #4CAF50 !important;
+    background: rgba(76, 175, 80, 0.05) !important;
+    color: #666 !important;
+    cursor: not-allowed;
+}
+
+.next-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transition: all 0.3s ease;
+}
+
+.next-btn.enabled {
+    opacity: 1;
+    cursor: pointer;
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.next-btn.error-shake {
+    border-color: #ff4444;
+}
+
+#resendTimer {
+    color: var(--text-color);
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* ...existing code... */
+
+.verification-status.success {
+    color: #4CAF50;
+}
+
+.verification-status.error {
+    color: #f44336;
+}
+
+/* ...existing code... */
+
+/* ...existing code... */
+
+.fun-fact-section {
+    margin-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+}
+
+#section5 .question-card {
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+/* ...existing code... */
+
+/* Submit button loader */
+.loader {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+#submitBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+    transition: all 0.3s ease;
+}
+
+#submitBtn:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
