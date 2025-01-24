@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submitted</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #070915;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .success-icon {
+            font-size: 100px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            margin-top: 30px;
+        }
+        .button-container a {
+            text-decoration: none;
+            color: white;
+            margin: 0 10px;
+        }
+        .button-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">&#10003;</div> <!-- Unicode checkmark -->
+        <h1>Form Submitted Successfully!</h1>
+        <p>Thank you for completing the registration. Your responses have been recorded.</p>
+        <div class="button-container">
+            <a href="/" class="btn btn-primary">Go to Home</a>
+        </div>
+    </div>
+</body>
+</html>

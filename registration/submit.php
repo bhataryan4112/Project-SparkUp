@@ -1,7 +1,13 @@
 <?php
 // Disable error display in production
-ini_set('display_errors', 0);
-error_reporting(0);
+ini_set('display_errors', 1); // Temporarily enable for debugging
+error_reporting(E_ALL);
+
+// Include PHPMailer
+require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 // Set headers
 header('Content-Type: application/json');
@@ -13,6 +19,9 @@ try {
     // Get JSON data
     $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
+
+    // Debug log
+    error_log("Received data: " . print_r($data, true));
 
     // Validate data
     if (!$data) {
@@ -28,6 +37,9 @@ try {
     // Connect to database
     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Debug log
+    error_log("Database connection successful");
 
     // Prepare statement
     $stmt = $db->prepare("INSERT INTO registration (
@@ -54,6 +66,56 @@ try {
         ':category5' => $data['category5']
     ]);
 
+    // Debug log
+    error_log("Database insertion successful");
+
+    // After successful database insertion, send success email
+    try {
+        $mail = new PHPMailer(true);
+        
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'no.reply.01.coding@gmail.com';
+        $mail->Password = 'xmel tbor nybn fznj';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+        
+        // Debug SMTP
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $debugOutput = '';
+        $mail->Debugoutput = function($str, $level) use (&$debugOutput) {
+            $debugOutput .= "$str\n";
+        };
+
+        // Get email template
+        $emailTemplate = __DIR__ . '/success_email_template.html';
+        if (!file_exists($emailTemplate)) {
+            throw new Exception('Email template file not found at: ' . $emailTemplate);
+        }
+        
+        $emailBody = file_get_contents($emailTemplate);
+        if ($emailBody === false) {
+            throw new Exception('Failed to read email template');
+        }
+
+        // Email settings
+        $mail->setFrom('no.reply.01.coding@gmail.com', 'Project SparkUp');
+        $mail->addAddress($data['email']);
+        $mail->isHTML(true);
+        $mail->Subject = "Welcome to Project SparkUp!";
+        $mail->Body = $emailBody;
+        
+        // Send email
+        $mail->send();
+        error_log("Success email sent to: " . $data['email']);
+    } catch (Exception $e) {
+        // Log email error but don't fail the registration
+        error_log("Email sending failed: " . $e->getMessage());
+        error_log("SMTP Debug Output: " . $debugOutput);
+    }
+
     // Send success response
     echo json_encode([
         'success' => true,
@@ -61,8 +123,9 @@ try {
     ]);
 
 } catch(Exception $e) {
-    // Log error (but don't expose details to client)
-    error_log("Error: " . $e->getMessage());
+    // Log detailed error
+    error_log("Error in submit.php: " . $e->getMessage());
+    error_log("Stack trace: " . $e->getTraceAsString());
     
     // Send error response
     http_response_code(500);

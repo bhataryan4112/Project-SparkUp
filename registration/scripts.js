@@ -2,7 +2,7 @@ let currentSection = 1;
 const totalSections = 5;
 let isOtpVerified = false;
 let isWelcomePopupClosed = false;
-
+let resendTimer = null;
 
 // Update questions array with all questions from old_index.html
 const questions = [
@@ -37,35 +37,35 @@ function generateQuestions() {
         sectionDiv.className = 'form-section hidden';
         sectionDiv.id = `section${section}`;
         
+        // Add questions first
         const startQuestion = ((section - 2) * 5);
-        
         for(let i = startQuestion; i < startQuestion + 5; i++) {
             sectionDiv.innerHTML += `
                 <div class="question-card">
                     <h3>${questions[i]}</h3>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="q${i+1}" value="5" required>
+                            <input type="radio" name="q${i+1}" value="5" tabindex="0">
                             <span class="custom-radio"></span>
                             Strongly Agree
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="q${i+1}" value="4">
+                            <input type="radio" name="q${i+1}" value="4" tabindex="0">
                             <span class="custom-radio"></span>
                             Agree
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="q${i+1}" value="3">
+                            <input type="radio" name="q${i+1}" value="3" tabindex="0">
                             <span class="custom-radio"></span>
                             Neutral
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="q${i+1}" value="2">
+                            <input type="radio" name="q${i+1}" value="2" tabindex="0">
                             <span class="custom-radio"></span>
                             Disagree
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="q${i+1}" value="1">
+                            <input type="radio" name="q${i+1}" value="1" tabindex="0">
                             <span class="custom-radio"></span>
                             Strongly Disagree
                         </label>
@@ -74,33 +74,16 @@ function generateQuestions() {
             `;
         }
 
-        // Add email verification section only at the end of section 5
+        // Then add fun fact textarea only to section 5
         if(section === 5) {
             sectionDiv.innerHTML += `
-                <div class="email-verification-section">
-                    <h3>Share omething interesting about yourself (Optional)</h3>
-                    <div class="form-group">
-                        <label for="funFact">Fun Fact</label>
-                        <textarea id="funFact" 
-                            class="fun-fact-textarea" 
-                            placeholder="Tell us something unique about yourself (hobbies, achievements, interests...)"
-                            rows="5"
-                        ></textarea>
-                    </div>
-                    <h3>Email Verification</h3>
-                    <div class="form-group">
-                        <label for="email">VIT Email Address</label>
-                        <input type="email" id="email" placeholder="yourname@vit.edu" required>
-                    </div>
-                    <div class="otp-section">
-                        <button type="button" class="btn" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
-                        <div class="loader" id="otpLoader"></div>
-                        <div class="form-group">
-                            <input type="text" id="otp" placeholder="Enter 6-digit OTP" maxlength="6">
-                        </div>
-                        <button type="button" class="btn verify-btn" id="verifyOtpBtn" onclick="verifyOTP()">Verify OTP</button>
-                        <div class="loader" id="verifyLoader"></div>
-                    </div>
+                <div class="form-group fun-fact-section">
+                    <h3>Share something interesting about yourself (Optional)</h3>
+                    <textarea id="funFact" 
+                        class="fun-fact-textarea" 
+                        placeholder="Tell us something unique about yourself (hobbies, achievements, interests...)"
+                        rows="5"
+                    ></textarea>
                 </div>
             `;
         }
@@ -117,7 +100,7 @@ function generateQuestions() {
         } else {
             buttonContainer.innerHTML = `
                 <button type="button" class="btn" onclick="prevSection(${section})">Previous</button>
-                <button type="submit" class="btn" id="submitBtn" disabled>Submit</button>
+                <button type="submit" class="btn" id="submitBtn">Submit</button>
             `;
         }
         
@@ -131,6 +114,13 @@ function nextSection(section) {
         alert('Please click "Let\'s Begin" to start the registration.');
         return;
     }
+
+    // Remove isOtpVerified check here
+    // if (section === 1 && !isOtpVerified) {
+    //     alert('Please verify your email with OTP first');
+    //     return;
+    // }
+
     if (!validateSection(section)) return;
     
     document.getElementById(`section${section}`).classList.add('hidden');
@@ -174,17 +164,26 @@ function validateSection(section) {
     let firstUnanswered = null;
     
     if(section === 1) {
-        // Validate basic info section
-        const requiredInputs = currentSectionElement.querySelectorAll('input[required], select[required]');
-        requiredInputs.forEach(input => {
-            if (!input.value.trim()) {
-                isValid = false;
-                input.classList.add('error');
-                if (!firstUnanswered) firstUnanswered = input;
-            } else {
-                input.classList.remove('error');
+        const { allFieldsFilled, missingFields } = window.checkFormCompletion();
+        if (!allFieldsFilled || !window.isOtpVerified) {
+            // Use the same error highlighting as in index.php
+            if (!window.isOtpVerified) {
+                const otpInput = document.getElementById('otp');
+                const otpStatus = document.getElementById('otpStatus');
+                otpStatus.textContent = 'Please verify your email first';
+                otpStatus.className = 'verification-status error';
+                otpInput.classList.add('error');
             }
-        });
+            
+            if (!allFieldsFilled) {
+                missingFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    field.classList.add('error');
+                    if (!firstUnanswered) firstUnanswered = field;
+                });
+            }
+            isValid = false;
+        }
     } else {
         // Validate question sections
         const startQuestion = ((section - 2) * 5) + 1;
@@ -209,6 +208,10 @@ function validateSection(section) {
                 if (!firstUnanswered) {
                     firstUnanswered = questionCard;
                 }
+            } else {
+                // Remove error states when question is answered
+                const questionCard = radioGroup[0].closest('.question-card');
+                questionCard.classList.remove('error-card', 'error-shake');
             }
         }
     }
@@ -229,6 +232,7 @@ function validateSection(section) {
 function validateAllQuestions() {
     let isValid = true;
     let firstUnanswered = null;
+    let section5HasError = false;
 
     // First validate basic info
     const basicInfo = document.getElementById('section1');
@@ -261,6 +265,15 @@ function validateAllQuestions() {
             if (!firstUnanswered) {
                 firstUnanswered = questionCard;
             }
+            
+            // Check if this is in section 5
+            if (questionCard.closest('#section5')) {
+                section5HasError = true;
+            }
+        } else {
+            // Remove error states when question is answered
+            const questionCard = radioGroup[0].closest('.question-card');
+            questionCard.classList.remove('error-card', 'error-shake');
         }
     }
 
@@ -272,13 +285,6 @@ function validateAllQuestions() {
         isValid = false;
         email.classList.add('error');
         if (!firstUnanswered) firstUnanswered = email;
-    }
-
-    // Update OTP verification check
-    if (!isOtpVerified) {
-        isValid = false;
-        alert('Please verify your email with OTP first');
-        return false;
     }
 
     // Scroll to first unanswered question/field with a slight delay for better UX
@@ -309,109 +315,18 @@ function setupErrorClearance() {
     document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
         radio.addEventListener('change', function() {
             const card = this.closest('.question-card');
-            if(card) card.classList.remove('error-card');
+            if(card) {
+                card.classList.remove('error-card', 'error-shake');
+                
+                // Re-enable submit button if in section 5
+                if (card.closest('#section5')) {
+                    const submitBtn = document.getElementById('submitBtn');
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                    }
+                }
+            }
         });
-    });
-}
-
-// Add these functions for email verification
-function sendOTP() {
-    const email = document.getElementById('email').value;
-    if (!email.endsWith('@vit.edu')) {
-        alert('Please enter a valid VIT email address');
-        return;
-    }
-    
-    // Show loader and hide send button
-    document.getElementById('sendOtpBtn').style.display = 'none';
-    document.getElementById('otpLoader').style.display = 'block';
-    
-    const formData = new FormData();
-    formData.append('email', email);
-
-    fetch('send_otp.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Hide loader
-        document.getElementById('otpLoader').style.display = 'none';
-        
-        if (data.success) {
-            // Show verify button and OTP field
-            document.getElementById('verifyOtpBtn').style.display = 'block';
-            document.getElementById('otp').style.display = 'block';
-            showOtpPopup('otpSentPopup');
-        } else {
-            alert('Failed to send OTP: ' + data.message);
-            document.getElementById('sendOtpBtn').style.display = 'block';
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to send OTP. Please try again.');
-        document.getElementById('sendOtpBtn').style.display = 'block';
-        document.getElementById('otpLoader').style.display = 'none';
-    });
-    // Simulate API call delay
-    setTimeout(() => {
-        // Hide loader
-        document.getElementById('otpLoader').style.display = 'none';
-        // Show verify button and OTP field
-        document.getElementById('verifyOtpBtn').style.display = 'block';
-        document.getElementById('otp').style.display = 'block';
-        // Show OTP sent popup
-        showOtpPopup('otpSentPopup');
-    }, 2000);
-}
-
-function verifyOTP() {
-    const otp = document.getElementById('otp').value;
-    
-    // Show loader and hide verify button
-    document.getElementById('verifyOtpBtn').style.display = 'none';
-    document.getElementById('verifyLoader').style.display = 'block';
-    
-    const formData = new FormData();
-    formData.append('otp', otp);
-
-    fetch('verify_otp.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Hide loader
-        document.getElementById('verifyLoader').style.display = 'none';
-        
-        if (data.success) {
-            isOtpVerified = true;
-            showOtpPopup('otpVerifiedPopup');
-            document.getElementById('submitBtn').disabled = false;
-            document.getElementById('verifyOtpBtn').style.display = 'none';
-            document.getElementById('otp').disabled = true;
-    // Simulate verification delay
-    setTimeout(() => {
-        // Hide loader
-        document.getElementById('verifyLoader').style.display = 'none';
-        
-        if (otp === '1234') {
-            isOtpVerified = true; // Set verification status
-            showOtpPopup('otpVerifiedPopup');
-            document.getElementById('submitBtn').disabled = false;
-            document.getElementById('verifyOtpBtn').style.display = 'none'; // Hide verify button
-            document.getElementById('otp').disabled = true; // Disable OTP input
-        } else {
-            showOtpPopup('otpErrorPopup');
-            document.getElementById('verifyOtpBtn').style.display = 'block';
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to verify OTP. Please try again.');
-        document.getElementById('verifyOtpBtn').style.display = 'block';
-        document.getElementById('verifyLoader').style.display = 'none';
     });
 }
 
@@ -470,11 +385,44 @@ function calculateCategoryScores() {
     return scores;
 }
 
-function submitForm() {
-    if (!validateAllQuestions()) return;
+function startResendTimer() {
+    let seconds = 30;
+    const sendOtpBtn = document.getElementById('sendOtpBtn');
+    const timerSpan = document.getElementById('resendTimer');
+    
+    sendOtpBtn.textContent = 'Resend OTP';
+    sendOtpBtn.disabled = true;
+    timerSpan.style.display = 'inline';
+    
+    if (resendTimer) clearInterval(resendTimer);
+    
+    resendTimer = setInterval(() => {
+        timerSpan.textContent = `(${seconds}s)`;
+        seconds--;
+        
+        if (seconds < 0) {
+            clearInterval(resendTimer);
+            sendOtpBtn.disabled = false;
+            timerSpan.style.display = 'none';
+        }
+    }, 1000);
+}
 
-    // Debug logs
-    console.log('Form validation passed, preparing to submit...');
+function submitForm() {
+    // Use the same validation as other sections first
+    if (!validateSection(5)) {
+        return;
+    }
+
+    // Then do full validation
+    if (!validateAllQuestions()) {
+        return;
+    }
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<div class="loader"></div> Submitting...';
 
     // Get form data
     const formData = {
@@ -499,7 +447,7 @@ function submitForm() {
     console.log('Sending data:', formData);
 
     // Send to server with correct URL and method
-    fetch('https://thegroup11.com/registration/submit.php', { // Updated URL
+    fetch('https://thegroup11.com/registration/submit', { // Updated URL
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -523,7 +471,6 @@ function submitForm() {
     .then(data => {
         console.log('Parsed Response:', data);
         if (data.success) {
-            alert('Registration completed successfully!');
             window.location.href = 'success.html';
         } else {
             throw new Error(data.message || 'Unknown error occurred');
@@ -532,20 +479,13 @@ function submitForm() {
     .catch(error => {
         console.error('Submission Error:', error);
         alert('An error occurred while submitting the form. Please check console for details.');
+    })
+    .finally(() => {
+        // Reset button state if there was an error
+        // (successful submission will redirect)
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
     });
-    }, 1500);
-}
-
-function showOtpPopup(popupId) {
-    document.getElementById(popupId).classList.add('active');
-}
-
-function closeOtpPopup(popupId) {
-    document.getElementById(popupId).classList.remove('active');
-}
-
-function closeWelcomePopup() {
-    document.getElementById('welcomePopup').classList.remove('active');
 }
 
 // Initialize the form
@@ -563,10 +503,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('registrationForm').addEventListener('submit', (e) => {
         e.preventDefault();
         console.log('Form submission started');
+        
+        // This will trigger the same validation behavior as other sections
         submitForm();
-        if(validateAllQuestions()) {
-            // Handle successful form submission here
-            alert('Form submitted successfully!');
-        }
     });
 });

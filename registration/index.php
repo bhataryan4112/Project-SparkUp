@@ -24,108 +24,18 @@ function sendOtp($email)
         $mail->Password = 'xmel tbor nybn fznj'; // Replace with your app password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
+
+        $emailBody = file_get_contents('email_template.html');
+    $emailBody = str_replace('{{OTP}}', $otp, $emailBody);
 // Email settings
-$mail->setFrom('no.reply.01.coding@gmail.com', 'No Reply');
+$mail->setFrom('no.reply.01.coding@gmail.com', 'Project SparkUp - No Reply');
 $mail->addAddress($email);
-$mail->Subject = 'Your OTP Code';
+$mail->Subject = "Project SparkUp Registration OTP - $otp";
 
 // HTML email template
 $mail->isHTML(true);
-$mail->Body = "
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Welcome to Project SparkUp!</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
-            margin: 0;
-            padding: 0;
-            color: #ffffff;
-        }
-        .email-container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: #262626;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
-            overflow: hidden;
-        }
-        .header {
-            background-color: #ff6600;
-            text-align: center;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .header img {
-            max-width: 50px; 
-            margin-right: 15px;
-        }
-        .header h1 {
-            color: #ffffff;
-            font-size: 24px;
-            margin: 0;
-        }
-        .content {
-            padding: 30px;
-            text-align: center;
-        }
-        .otp {
-            font-size: 32px;
-            font-weight: bold;
-            color: #ff6600;
-            background-color: #1a1a1a;
-            padding: 20px;
-            border-radius: 5px;
-            display: inline-block;
-            margin: 20px 0;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 14px;
-            background-color: #1a1a1a;
-            border-top: 1px solid #ff6600;
-        }
-        .footer a {
-            color: #ff6600;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .footer a:hover {
-            color: #ffffff;
-        }
-    </style>
-</head>
-<body>
-    <div class='email-container'>
-        <div class='header'>
-            <img src='https://thegroup11.com/registration/logo-new.png' alt='Project SparkUp Logo'>
-            <h1>Welcome to Project SparkUp!</h1>
-        </div>
-        <div class='content'>
-            <p>Dear User,</p>
-            <p>Your One-Time Password (OTP) is:</p>
-            <div class='otp'>$otp</div>
-            <p>This OTP is valid for <strong>15 minutes</strong>. Please do not share it with anyone.</p>
-            <p>If you did not request this, please ignore this email.</p>
-        </div>
-        <div class='footer'>
-            <p>Follow us on:</p>
-            <a href='https://instagram.com/yourpage' target='_blank'>Instagram</a> |
-            <a href='https://www.yourwebsite.com' target='_blank'>Website</a>
-            <p>&copy; 2025 Project SparkUp. All rights reserved.</p>
-        </div>
-    </div>
-</body>
-</html>
-";
-
+$mail->Body = $emailBody;
+$mail->AltBody = "Your OTP For Project SparkUp is: $otp. Valid for 15 minutes.";
 $mail->send();
 
         return ['status' => true, 'message' => 'OTP sent successfully'];
@@ -146,15 +56,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } elseif (isset($_POST['action']) && $_POST['action'] === 'verify_otp') {
         $otp = $_POST['otp'];
-        if (isset($_SESSION['otp'], $_SESSION['otp_expiry']) && time() <= $_SESSION['otp_expiry']) {
+        if (isset($_SESSION['otp'], $_SESSION['otp_expiry'])) {
+            if (time() > $_SESSION['otp_expiry']) {
+                echo json_encode(['status' => false, 'message' => 'OTP expired']);
+                exit;
+            }
+            
             if ($otp == $_SESSION['otp']) {
-                unset($_SESSION['otp'], $_SESSION['otp_expiry']);
+                $_SESSION['verified_email'] = true; // Add this line
                 echo json_encode(['status' => true, 'message' => 'OTP verified successfully']);
+                // Don't unset OTP session variables here
             } else {
                 echo json_encode(['status' => false, 'message' => 'Invalid OTP']);
             }
         } else {
-            echo json_encode(['status' => false, 'message' => 'OTP expired']);
+            echo json_encode(['status' => false, 'message' => 'No OTP found. Please request a new one.']);
         }
         exit;
     }
@@ -268,74 +184,180 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="campus2">Kondwa</option>
                     </select>
                 </div>
-                <div class="col-md-6">
-                    <label for="email" class="form-label">Email ID </label>
-                        <input type="text" class="form-control" id="email" name="Email Id" placeholder="Email" required>
-                        <div class="invalid-feedback">Please enter a valid email address.</div>
-      
-                    <div class="col-md-6">
-                        <label for="otp" class="form-label">OTP</label>
-                        <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP">
-                        <button type="button" class="btn btn-secondary" id="sendOtpBtn">Send OTP</button>
+                <div class="otp-verification">
+                    <div class="form-group">
+                        <label for="email">VIT Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="yourname@vit.edu" required>
                     </div>
-                    <div id="otpMessage" style="padding-left: 15px;"></div>
+                    <div class="otp-input-group">
+                        <input type="text" id="otp" placeholder="Enter 6-digit OTP" maxlength="6">
+                        <button type="button" class="btn" id="sendOtpBtn">Send OTP</button>
+                        <span id="resendTimer"></span>
+                    </div>
+                    <div class="verification-status" id="otpStatus"></div>
+                </div>
 
-                <button type="button" class="btn next-btn" onclick="nextSection(1)">Begin Registration</button>
+                <button type="button" class="btn next-btn" onclick="nextSection(1)" disabled>Begin Registration</button>
             </section>
             <!-- Sections 2-5 will be generated by JavaScript -->
             <!-- Email verification section will be added by JavaScript at the end of section 5 -->
         </form>
     </div>
     <script>
-        document.getElementById('registrationForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        const otp = document.getElementById('otp').value;
+    document.addEventListener('DOMContentLoaded', function() {
+        const otpInput = document.getElementById('otp');
+        const sendOtpBtn = document.getElementById('sendOtpBtn');
+        const otpStatus = document.getElementById('otpStatus');
+        const beginBtn = document.querySelector('.next-btn');
+        const form = document.getElementById('registrationForm');
+        let isOtpVerified = false;
 
-        fetch('', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ action: 'verify_otp', otp: otp })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status) {
-                const form = event.target;
-                if (!form.checkValidity() || !document.getElementById('tnc').checked) {
-                    document.getElementById('errorBox').innerText = "Please fill all fields and agree to the terms.";
-                    document.getElementById('errorBox').style.display = 'block';
-                    return;
+        // Update window level variable for scripts.js to access
+        window.isOtpVerified = false;
+
+        function startResendTimer() {
+            let seconds = 30;
+            const timerSpan = document.getElementById('resendTimer');
+            sendOtpBtn.style.display = 'none';
+            timerSpan.style.display = 'inline';
+            
+            const timer = setInterval(() => {
+                timerSpan.textContent = `(${seconds}s)`;
+                seconds--;
+                
+                if (seconds < 0) {
+                    clearInterval(timer);
+                    timerSpan.style.display = 'none';
+                    sendOtpBtn.style.display = 'inline-block';
+                    sendOtpBtn.textContent = 'Resend OTP';
                 }
-                const averages = calculateAverages();
-                const formData = new FormData(form);
-                Object.entries(averages).forEach(([category, avg]) => formData.append(category, avg));
+            }, 1000);
+        }
 
-                fetch(scriptURL, { method: 'POST', body: formData })
-                    .then(response => {
-                        alert('Form submitted successfully');
-                        window.location.href = '/form-submitted';
-                    })
-                    .catch(error => console.error('Error!', error.message));
-            } else {
-                document.getElementById('otpMessage').innerText = data.message;
+        function sendOTP() {
+            const email = document.getElementById('email').value;
+            if (!email.endsWith('@vit.edu')) {
+                otpStatus.textContent = 'Please enter a valid VIT email address';
+                otpStatus.className = 'verification-status error';
+                return;
             }
-        })
-        .catch(error => console.error('Error!', error.message));
-    });
 
-    document.getElementById('sendOtpBtn').addEventListener('click', function () {
-        const email = document.getElementById('email').value;
-        fetch('', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ action: 'send_otp', email: email })
-        })
-        .then(response => response.json())
-        .then(data => {
-            const otpMessage = document.getElementById('otpMessage');
-            otpMessage.style.color = data.status ? 'green' : 'red';
-            otpMessage.innerText = data.message;
-            if (data.status) {
-                document.getElementById('sendOtpBtn').style.display = 'none';
+            fetch('', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ 
+                    action: 'send_otp', 
+                    email: email 
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                otpStatus.textContent = data.message;
+                otpStatus.className = data.status ? 'verification-status success' : 'verification-status error';
+                if (data.status) {
+                    startResendTimer();
+                    otpInput.style.display = 'block';
+                }
+            });
+        }
+
+        function verifyOTP() {
+            const otp = otpInput.value;
+            const email = document.getElementById('email').value;
+            if (otp.length !== 6) return;
+
+            fetch('', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ 
+                    action: 'verify_otp', 
+                    otp: otp,
+                    email: email
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                otpStatus.textContent = data.message;
+                otpStatus.className = 'verification-status ' + (data.status ? 'success' : 'error');
+                
+                if (data.status) {
+                    window.isOtpVerified = true; // This is now the single source of truth
+                    isOtpVerified = true; // Keep local copy in sync
+                    otpInput.disabled = true;
+                    otpInput.classList.add('verified');
+                    document.getElementById('email').disabled = true;
+                    document.getElementById('email').classList.add('verified');
+                    sendOtpBtn.style.display = 'none';
+                    document.getElementById('resendTimer').style.display = 'none';
+                    checkFormCompletion(); // Check if we can enable the button
+                } else {
+                    otpInput.classList.add('error');
+                    otpInput.classList.add('error-shake');
+                    setTimeout(() => otpInput.classList.remove('error-shake'), 500);
+                }
+                checkFormCompletion();
+            });
+        }
+
+        // Make checkFormCompletion available globally
+        window.checkFormCompletion = function() {
+            const requiredFields = form.querySelectorAll('#section1 input[required], #section1 select[required]');
+            let allFieldsFilled = true;
+            let missingFields = [];
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    allFieldsFilled = false;
+                    field.classList.add('error');
+                    missingFields.push(field.id);
+                } else {
+                    field.classList.remove('error');
+                }
+            });
+
+            beginBtn.disabled = !(allFieldsFilled && window.isOtpVerified);
+            beginBtn.classList.toggle('enabled', !beginBtn.disabled);
+            return { allFieldsFilled, missingFields };
+        };
+
+        // Event listeners for form fields
+        form.querySelectorAll('#section1 input[required], #section1 select[required]').forEach(field => {
+            field.addEventListener('input', checkFormCompletion);
+        });
+
+        // Add error animation to Begin Registration button when clicked while disabled
+        beginBtn.addEventListener('click', function(e) {
+            const { allFieldsFilled, missingFields } = checkFormCompletion();
+            
+            if (!allFieldsFilled || !window.isOtpVerified) {
+                this.classList.add('error-shake');
+                setTimeout(() => this.classList.remove('error-shake'), 500);
+
+                // Show what's missing
+                if (!window.isOtpVerified) {
+                    otpStatus.textContent = 'Please verify your email first';
+                    otpStatus.className = 'verification-status error';
+                    otpInput.classList.add('error');
+                    otpInput.classList.add('error-shake');
+                    setTimeout(() => otpInput.classList.remove('error-shake'), 500);
+                }
+
+                if (!allFieldsFilled) {
+                    missingFields.forEach(fieldId => {
+                        const field = document.getElementById(fieldId);
+                        field.classList.add('error');
+                        field.classList.add('error-shake');
+                        setTimeout(() => field.classList.remove('error-shake'), 500);
+                    });
+                }
+            }
+        });
+
+        sendOtpBtn.addEventListener('click', sendOTP);
+        
+        otpInput.addEventListener('keyup', function() {
+            if (this.value.length === 6) {
+                verifyOTP();
             }
         });
     });
