@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#000000">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>SparkUp - Find Your Real-Life Connections</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+  <!-- <style>
+      .steps-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .step {
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .step1 {
+            top: 20px;
+            left: 20px;
+        }
+        .step2 {
+            bottom: 40px;
+            right: 20px;
+        }
+        .arrow {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+        }
+        .arrow1 {
+            top: 50px;
+            left: 50px;
+            transform: rotate(-20deg);
+        }
+        .arrow2 {
+            bottom: 80px;
+            right: 100px;
+            transform: rotate(40deg);
+        }
+        .arrow::after {
+            content: '→';
+            font-size: 40px;
+            color: black;
+        }
+  </style> -->
+</head>
+<body>
+  <!-- Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader-container">
+      <div class="logo-container">
+        <div class="logo-glow"></div>
+        <img src="images/logo.png" alt="SparkUp" class="logo-image">
+      </div>
+      <p class="loader-text">CONNECTING TO SPARKUP...</p>
+    </div>
+  </div>
+
+  <!-- Wrap all content after loader in a div -->
+  <div class="page-content" id="pageContent">
+    <!-- Single Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-content">
+          <div class="nav-brand">
+            <img src="images/logo.png" alt="SparkUp" class="nav-logo">
+            <div class="brand-text">Project <span>SparkUp</span></div>
+          </div>
+          <button class="hamburger" aria-label="Menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+          <div class="nav-links">
+            <a href="#how-it-works">How it Works</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="/register" class="register-btn">Register</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Single Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title fade-in">Find the people you've crossed paths with</h1>
+        <p class="hero-subtitle slide-in">Ignite the world with SparkUp</p>
+        <div class="login-btn-container">
+          <a href="/login" class="login-btn">Log in</a>
+        </div>
+      </div>
+    </section>
+<!-- Steps Section -->
+<div class="step-container">
+    <div class="step step1">
+        <h3>STEP 1</h3>
+        <p>REGISTRATION</p>
+        <small>Register and login to join this event </small>
+    </div>
+    <div class="step step2">
+        <h3>STEP 2</h3>
+        <p>PERSONALITY TEST</p>
+        <small>Complete your matching criteria</small>
+    </div>
+    <div class="step step3">
+        <h3>STEP 3</h3>
+        <p>GET MATCHED</p>
+        <small>Find your perfect matches</small>
+    </div>
+    <div class="step step4">
+        <h3>STEP 4</h3>
+        <p>ATTEND EVENT</p>
+        <small>Meet your matches in person</small>
+    </div>
+    <div class="arrows">
+        <svg class="arrow arrow1" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <marker id="arrowhead1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="var(--happn-red)"/>
+                </marker>
+            </defs>
+            <path d="M10,50 Q100,0 190,50" fill="none" stroke="var(--happn-red)" stroke-width="3" marker-end="url(#arrowhead1)"/>
+        </svg>
+        <!-- <svg class="arrow arrow2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M190,50 Q100,125 10,200" fill="none" stroke="var(--happn-red)" stroke-width="3" marker-end="url(#arrowhead1)"/>
+        </svg> -->
+        <svg class="arrow arrow3" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10,50 Q100,0 190,50" fill="none" stroke="var(--happn-red)" stroke-width="3" marker-end="url(#arrowhead1)"/>
+        </svg>
+    </div>
+</div>
+
+    <!-- Features Section -->
+    <section class="features" id="how-it-works">
+      <div class="container">
+       <center> <h2>How it works</h2></center>
+        <div class="features-grid">
+          <div class="feature-card">
+            <img src="images/registration logo.png" class="feature-icon" alt="Location">
+            <h3>Registration</h3>
+            <p>"Ignite Your Potential—Join SparkUp Today!"</p>
+          </div>
+          <div class="feature-card">
+            <img src="images/hand.png" class="feature-icon" alt="Heart">
+            <h3>Get matched</h3>
+            <p>On bases of your personality you will get matched </p>
+          </div>
+          <div class="feature-card">
+            <img src="images/interaction.png" class="feature-icon" alt="Chat">
+            <h3>Interaction</h3>
+            <p>Match and start chit - chatting with each other</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+      <div class="about-container">
+        <h2 class="slide-in">About Us</h2>
+        <div class="fade-in">
+            <p><strong>What's Project SparkUp?</strong></p>
+            <p>"Not your regular matchmaking – It's smarter, bolder, and way more fun."</p>
+            
+            <p>Welcome to Project SparkUp, where connections aren't left to chance. We're an offline, AI-powered matchmaking event that combines cutting-edge tech with real-world interactions to create meaningful, unforgettable connections. Whether it's new friendships, potential partners, or just people who get your vibe, we make meeting new people exciting and effortless.</p>
+            
+            <p>Here's how it works: Our AI uses personality insights to match you with five unique people. You'll meet each of them in short, lively conversations that feel less like speed dating and more like a burst of connection. Each match is tailored to your vibe, ensuring every interaction is dynamic, fun, and full of potential.</p>
+            
+            <p><strong>What Makes SparkUp Different?</strong></p>
+            <ul>
+                <li>Tailored Matches: We dig into your personality, so your matches actually make sense.</li>
+                <li>Time-Efficient: Five matches, one hour, zero wasted time.</li>
+                <li>Real Connections: No screens, no distractions—just face-to-face fun.</li>
+                <li>Always Evolving: Your feedback powers our mission to keep getting better.</li>
+            </ul>
+            
+            <p>With SparkUp, it's not just about finding a match—it's about creating moments that matter. Our events are designed for exploration, discovery, and a whole lot of sparks.</p>
+            
+            <p><strong>Why Join Us?</strong></p>
+            <p>Because you deserve something different. No swiping, no algorithms ghosting you—just authentic interactions curated by AI but driven by you.</p>
+            
+            <p><strong>Are you ready to spark something amazing? Let's make it happen.</strong></p>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+      <div class="contact-container">
+        <div class="contact-header">
+          <h2>Get in Touch</h2>
+          <p>We'd love to hear from you</p>
+        </div>
+        
+        <form class="contact-form" id="contact-form">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" class="form-control" required placeholder="Enter your name">
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" class="form-control" required placeholder="Enter your email">
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" class="form-control" rows="5" required placeholder="What would you like to tell us?"></textarea>
+          </div>
+          
+          <button type="submit" class="submit-btn">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <h3>SparkUp</h3>
+            <p>Making real-life connections happen</p>
+            <div class="social-links">
+              <a href="https://instagram.com/project_sparkup" class="social-link" target="_blank">
+                <img src="images/instagram.jpg" alt="Instagram">
+              </a>
+              <!-- Add more social links as needed -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; 2025 SparkUp. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loader = document.getElementById('loader');
+        const pageContent = document.getElementById('pageContent');
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navLinksItems = document.querySelectorAll('.nav-links a');
+        
+        // Hamburger menu toggle with animation
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            
+            // Reset animations when closing
+            if (!navLinks.classList.contains('active')) {
+                navLinksItems.forEach(item => {
+                    item.style.animation = 'none';
+                    item.offsetHeight; // Trigger reflow
+                    item.style.animation = null;
+                });
+            }
+        });
+
+        // Close mobile menu when clicking a link
+        navLinksItems.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // Loader code remains the same
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                loader.classList.add('fade-out');
+                setTimeout(() => {
+                    pageContent.classList.add('visible');
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 800);
+                }, 300);
+            }, 2000);
+        });
+    });
+  </script>
+</body>
+</html>
