@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+    <script>
+        async function fetchData() {
+            const response = await fetch('apicall.php'); // Corrected URL
+            const data = await response.json();
+            const tableBody = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            data.forEach(item => {
+                const row = tableBody.insertRow();
+                row.insertCell(0).textContent = item.Email;
+                row.insertCell(1).textContent = item.TableNumber; // Corrected column name
+                row.insertCell(2).textContent = item.RoomNumber;
+                row.insertCell(3).textContent = item.Status;
+            });
+        }
+
+        window.onload = fetchData;
+    </script>
+</head>
+<body>
+    <h1>Admin Page</h1>
+    <table id="data-table" border="1">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Table Number</th>
+                <th>Room Number</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here by JavaScript -->
+        </tbody>
+    </table>
+</body>
+</html>
