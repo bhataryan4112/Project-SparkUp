@@ -9,9 +9,9 @@ if (!isset($_SESSION['admin_logged_in'])) {
 
 // Database configuration
 $db_host = "localhost";
-$db_name = "u265056410_registration";
-$db_user = "u265056410_arya";
-$db_pass = "Registration_SparkUp@123";
+$db_name = "";
+$db_user = "";
+$db_pass = "";
 
 // Handle delete request
 if (isset($_POST['delete_id'])) {
@@ -94,6 +94,19 @@ try {
                 <?php endif; ?>
             </form>
         </div>
+
+<div class="card mb-3">
+    <div class="card-header">Table Management</div>
+    <div class="card-body">
+        <p>Manage table assignments and monitor active conversations</p>
+        <div class="d-grid gap-2">
+            <!-- Fix links with full paths -->
+            <a href="https://thegroup11.com/admin/table_management.php" class="btn btn-primary">Manage Tables</a>
+            <a href="https://thegroup11.com/admin/assign_tables.php" class="btn btn-outline-primary">Assign Matches to Tables</a>
+        </div>
+    </div>
+</div>
+
 
         <div class="table-container">
             <table>
