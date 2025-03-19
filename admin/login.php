@@ -1,13 +1,27 @@
 <?php
 session_start();
 
+// Debug session status
+error_log("Session ID at login: " . session_id());
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
     if ($username === 'admin' && $password === 'admin') {
         $_SESSION['admin_logged_in'] = true;
-        header('Location: /admin');
+        
+        // Debug session variables
+        error_log("Admin logged in, admin_logged_in set to: " . $_SESSION['admin_logged_in']);
+        
+        // Check if there was a requested page before login
+        if (isset($_SESSION['requested_page'])) {
+            $redirect = $_SESSION['requested_page'];
+            unset($_SESSION['requested_page']);
+            header("Location: $redirect");
+        } else {
+            header('Location: index.php');
+        }
         exit;
     } else {
         $error = 'Invalid username or password';

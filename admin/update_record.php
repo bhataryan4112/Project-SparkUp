@@ -8,9 +8,9 @@ if (!isset($_SESSION['admin_logged_in'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db_host = "localhost";
-    $db_name = "u265056410_registration";
-    $db_user = "u265056410_arya";
-    $db_pass = "Registration_SparkUp@123";
+    $db_name = "";
+    $db_user = "";
+    $db_pass = "";
 
     try {
         $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
