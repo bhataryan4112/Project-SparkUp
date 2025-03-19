@@ -1,6 +1,6 @@
 <?php
 return [
-    "API_KEY" => "", // Base64 for "thegroup11"
+    "API_KEY" => "", // Enter API Key here
     "SMTP_USER" => "",
     "SMTP_PASS" => "",
 ];
