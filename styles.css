@@ -1,0 +1,71 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+/* Custom Styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Footer Icon Hover Animation */
+footer a img {
+    transition: transform 0.3s;
+}
+
+footer a:hover img {
+    transform: scale(1.2);
+}
+.img{
+    float: right;
+    margin-right: 20px;
+}
+.gradient-text {
+    font-size: 60px; /* Set font size */
+    background: linear-gradient(to right, #f32170, #8e44ee, #3d08ff); /* Gradient colors */
+    -webkit-background-clip: text; /* Clip background to text */
+    -webkit-text-fill-color: transparent; /* Make text fill transparent */
+    background-clip: text; /* Non-WebKit browsers */
+}
+.gradient-text2 {/*Aero design font on home page*/
+    font-size: 40px; /* Set font size */
+    background: linear-gradient(to right, #21f3d7, #3d08ff, #6344ee); /* Gradient colors */
+    -webkit-background-clip: text; /* Clip background to text */
+    -webkit-text-fill-color: transparent; /* Make text fill transparent */
+    background-clip: text; /* Non-WebKit browsers */
+}
+.gradient-background {
+    background: linear-gradient(to right, #37413f,#1d1e30d8);
+    border: 0px;
+    padding: 15px;
+    border-radius: 50px;
+    color: white;
+}
+.gradient-background-question{
+    background: linear-gradient(to right, #1b3846,#1d2d30d8);
+    border: 0px;
+    padding: 15px;
+    border-radius: 20px;
+    color: white;
+
+}
+.gradient-background-navbar {
+    background: linear-gradient( #061866,#070915);
+    border: 0px;
+    padding: 15px;
+    
+}
+.gradient-background-footer {
+    background: linear-gradient(#070915,#061866,#061866);
+    border: 0px;
+    padding: 15px;
+    
+}
+.transform:hover{
+    transform: scale(1.10) ;
+}
+
+
+
+
+
+
+
+

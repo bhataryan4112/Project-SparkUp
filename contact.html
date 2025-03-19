@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Project SparkUp</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bebas+Neue&family=Comfortaa:wght@300;400;600;700&family=Orbitron:wght@400;600;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">Project SparkUp</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html" class="active">Contact</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Hero Section -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Contact Us</h1>
+            <p>Get in touch with the Project SparkUp team</p>
+        </div>
+        <div class="page-hero-overlay"></div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Get In Touch</h2>
+                    <p>Have questions about Project SparkUp? Want to bring our platform to your institution? We'd love to hear from you!</p>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>team@thegroup11.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>+91 8605482342</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-social">
+                        <h3>Connect With Us</h3>
+                        <div class="social-icons">
+                            <a href="https://instagram.com/projectsparkup" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                                <span class="social-label">Follow Us on Instagram</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h2>Send Us a Message</h2>
+                    <br>
+                    <form id="contactForm">
+                        <br>
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder=" " required>
+                            <label for="name">Your Name</label>
+                            <i class="fas fa-check validation-icon valid"></i>
+                            <i class="fas fa-exclamation-circle validation-icon invalid"></i>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder=" " required>
+                            <label for="email">Email Address</label>
+                            <i class="fas fa-check validation-icon valid"></i>
+                            <i class="fas fa-exclamation-circle validation-icon invalid"></i>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="text" id="subject" placeholder=" " required>
+                            <label for="subject">Subject</label>
+                            <i class="fas fa-check validation-icon valid"></i>
+                            <i class="fas fa-exclamation-circle validation-icon invalid"></i>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea id="message" rows="5" placeholder=" " required></textarea>
+                            <label for="message">Your Message</label>
+                            <i class="fas fa-check validation-icon valid"></i>
+                            <i class="fas fa-exclamation-circle validation-icon invalid"></i>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary form-submit-btn">
+                            <span class="spinning-loader"></span>
+                            <span class="btn-text">Send Message</span>
+                        </button>
+                        
+                        <div class="form-feedback"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common questions</p>
+            </div>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is Project SparkUp a dating app?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, Project SparkUp is not a dating app. It's a platform designed to help college students form meaningful connections for academic and social purposes, such as finding study partners, project collaborators, and friends with complementary interests.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Who can participate in Project SparkUp events?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Currently, Project SparkUp events are exclusively for VIT students with a valid institutional email address. We verify all participants through our OTP system to maintain community integrity.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How does the matching algorithm work?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our AI matching algorithm analyzes your responses to 20 questions based on the Big Five personality traits. It creates matches based on complementary personality characteristics and ensures you meet people who will help you grow and expand your perspectives.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How long are the interactions?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Each interaction is timed for 5 minutes. This creates a structured, low-pressure environment for conversation and helps overcome initial social anxiety. After the event, you can continue conversations with matches you connected with.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What makes Project SparkUp different from social media?</h3>
+                        <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Unlike social media which often creates superficial connections, Project SparkUp facilitates meaningful face-to-face interactions based on personality compatibility and shared interests. Our structured approach eliminates the awkwardness of traditional networking while ensuring quality conversations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Project SparkUp</h2>
+                    <p>Finding connections that spark.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> team@thegroup11.com</p>
+                    <p><i class="fas fa-phone"></i> +91 9307026265</p>
+                </div>
+                
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="https://instagram.com/projectsparkup" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                            <span class="social-label">Follow Us on Instagram</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Project SparkUp. All rights reserved.</p>
+                <p>A project by TheGroup11©</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+</body>
+</html>
