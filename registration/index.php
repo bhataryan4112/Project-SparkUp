@@ -20,15 +20,15 @@ function sendOtp($email)
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'no.reply.01.coding@gmail.com'; // Replace with your email
-        $mail->Password = 'xmel tbor nybn fznj'; // Replace with your app password
+        $mail->Username = ''; // Replace with your email
+        $mail->Password = ''; // Replace with your app password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
         $emailBody = file_get_contents('email_template.html');
     $emailBody = str_replace('{{OTP}}', $otp, $emailBody);
 // Email settings
-$mail->setFrom('no.reply.01.coding@gmail.com', 'Project SparkUp - No Reply');
+$mail->setFrom('', 'Project SparkUp');
 $mail->addAddress($email);
 $mail->Subject = "Project SparkUp Registration OTP - $otp";
 
