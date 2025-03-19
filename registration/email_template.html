@@ -7,76 +7,160 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>OTP Verification - Project SparkUp</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+    <style>
+        :root {
+            color-scheme: light only;
+            supported-color-schemes: light only;
+        }
+        [data-ogsc] {
+            color-scheme: light only;
+        }
+        [data-ogsc] .text-stable,
+        [data-ogsc] .preserve-color {
+            color: inherit !important;
+        }
+        * {
+            forced-color-adjust: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .force-light {
+            forced-color-adjust: none !important;
+            color-scheme: light !important;
+            background-color: transparent !important;
+        }
+        /* Prevent Gmail's dark mode inversion */
+        body, table, td, a, p, span, div {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            forced-color-adjust: none !important;
+        }
+        [data-ogsc] * {
+            forced-color-adjust: none !important;
+        }
+        .dark-mode-text {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+        .accent-text {
+            color: #e67e23 !important;
+            -webkit-text-fill-color: #e67e23 !important;
+        }
+        .instagram-button {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            background-color: #000000 !important;
+            border: 2px solid #e67e23 !important;
+        }
+        /* Prevent dark mode color inversion */
+        [data-ogsc] .preserve-light {
+            color: #ffffff !important;
+            background-color: transparent !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+        [data-ogsc] .preserve-accent {
+            color: #e67e23 !important;
+            -webkit-text-fill-color: #e67e23 !important;
+        }
+        @media (prefers-color-scheme: dark) {
+            .preserve-light {
+                color: #ffffff !important;
+                background-color: transparent !important;
+                -webkit-text-fill-color: #ffffff !important;
+            }
+            .preserve-accent {
+                color: #e67e23 !important;
+                -webkit-text-fill-color: #e67e23 !important;
+            }
+            .force-dark {
+                background-color: #000000 !important;
+            }
+        }
+        /* MSO dark mode prevention */
+        [style*="color"] {
+            -webkit-text-fill-color: inherit !important;
+        }
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
 </head>
 
-<body style="margin:0;padding:0;background:#f8f9fa">
-    <div style="max-width:600px;margin:0 auto;padding:10px;">
-        <!-- Main Container -->
-        <div style="background:linear-gradient(180deg, #000000 0%, #000000 60%, #e67e23 100%);border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.2);">
-            
-            <!-- Header Section -->
-            <div style="background:#000000;padding:20px 15px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.1)">
-                <img src="https://thegroup11.com/logo.png" alt="SparkUp Logo" style="max-width:150px;height:auto;margin-bottom:10px">
-                <div style="width:40px;height:3px;background:linear-gradient(90deg,#e67e23,#ff9f4a);margin:10px auto;border-radius:2px"></div>
-            </div>
-
-            <!-- Content Section -->
-            <div style="padding:20px 15px;text-align:center">
-                <h1 style="color:#ffffff;font-family:'Montserrat',sans-serif;font-size:24px;margin:0;font-weight:600;letter-spacing:0.5px">
-                    Welcome to Project SparkUp!
-                </h1>
-                
-                <div style="margin:15px 0;padding:20px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.1)">
-                    <p style="color:#ffffff;font-family:'Montserrat',sans-serif;font-size:14px;line-height:1.4;margin:0 0 15px">
-                        Dear User,<br>Your One-Time Password (OTP) is:
-                    </p>
-                    
-                    <!-- OTP Display -->
-                    <div style="background:linear-gradient(135deg, rgba(230,126,35,0.1) 0%, rgba(255,255,255,0.05) 100%);padding:15px;border-radius:10px;margin:15px 0;border:2px solid #e67e23">
-                        <span style="font-family:'Montserrat',sans-serif;font-size:36px;font-weight:700;color:#e67e23;letter-spacing:3px;text-shadow:0 2px 4px rgba(0,0,0,0.2)">
-                            {{OTP}}
-                        </span>
-                    </div>
-
+<body style="margin:0;padding:0;background-color:transparent">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="margin:0 auto">
+        <tr>
+            <td class="force-dark" style="background:linear-gradient(180deg, #000000 0%, #000000 60%, #e67e23 100%);padding:20px;border-radius:12px">
+                <!-- Header -->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td align="center" style="padding:20px">
+                            <img src="https://thegroup11.com/logo.png" alt="SparkUp Logo" style="max-width:200px;height:auto">
+                        </td>
+                    </tr>
+                    <!-- OTP Content -->
+                    <tr>
+                        <td align="center" style="padding:20px;background:rgba(255,255,255,0.05);border-radius:12px">
+                            <h1 class="preserve-light dark-mode-text" style="font-family:'Montserrat',sans-serif;font-size:24px;margin:0">
+                                Welcome to Project SparkUp!
+                            </h1>
+                            <p class="preserve-light dark-mode-text" style="font-family:'Montserrat',sans-serif;font-size:16px;margin:20px 0">
+                                Your OTP is:
+                            </p>
+                            <div style="background:linear-gradient(135deg, rgba(230,126,35,0.1) 0%, rgba(255,255,255,0.05) 100%);padding:15px;border-radius:10px;border:2px solid #e67e23">
+                                <span class="preserve-accent accent-text" style="font-family:'Montserrat',sans-serif;font-size:36px;font-weight:700">
+                                    {{OTP}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
                     <!-- Timer Info -->
-                    <div style="margin:15px 0;padding:10px;background:rgba(230,126,35,0.1);border-radius:8px">
-                        <p style="color:#ffffff;font-family:'Montserrat',sans-serif;font-size:13px;margin:0">
-                            ⏱️ This OTP is valid for <strong style="color:#e67e23">15 minutes</strong>
-                        </p>
-                    </div>
-
+                    <tr>
+                        <td align="center" style="padding:10px;background:rgba(230,126,35,0.1);border-radius:8px">
+                            <p style="color:#ffffff;font-family:'Montserrat',sans-serif;font-size:13px;margin:0">
+                                ⏱️ This OTP is valid for <strong style="color:#e67e23">15 minutes</strong>
+                            </p>
+                        </td>
+                    </tr>
                     <!-- Security Notice -->
-                    <p style="color:#bbbbbb;font-family:'Montserrat',sans-serif;font-size:12px;line-height:1.4;margin:15px 0 0">
-                        Please do not share this OTP with anyone.<br>
-                        If you did not request this, please ignore this email.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Footer Section -->
-            <div style="background:linear-gradient(180deg, rgba(230,126,35,0.1) 0%, rgba(230,126,35,0.3) 100%);padding:20px 15px;text-align:center;border-top:1px solid rgba(255,255,255,0.1)">
-                <!-- Social Media -->
-                <div style="margin-bottom:15px">
-                    <a href="https://instagram.com/project_sparkup" style="display:inline-flex;align-items:center;padding:8px 16px;background:#000000;color:white;text-decoration:none;border-radius:20px;font-family:'Montserrat',sans-serif;font-size:13px;border:2px solid #e67e23">
-                        <img src="https://thegroup11.com/registration/images/image-1.png" alt="Instagram" style="width:16px;height:16px;margin-right:6px">
-                        Follow us on Instagram
-                    </a>
-                </div>
-
-                <!-- Contact Info -->
-                <div style="color:#ffffff;font-family:'Montserrat',sans-serif;font-size:12px;line-height:1.4">
-                    <p style="margin:3px 0">📧 support@thegroup11.com</p>
-                    <p style="margin:3px 0">📞 +91 8673654276</p>
-                </div>
-
-                <!-- Copyright -->
-                <div style="margin-top:15px;padding-top:15px;border-top:1px solid rgba(255,255,255,0.1)">
-                    <p style="color:rgba(255,255,255,0.6);font-family:'Montserrat',sans-serif;font-size:11px;margin:0">
-                        © 2025 Project SparkUp - TheGroup11. All rights reserved.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <tr>
+                        <td align="center" style="padding:15px 0 0">
+                            <p style="color:#bbbbbb;font-family:'Montserrat',sans-serif;font-size:12px;line-height:1.4;margin:0">
+                                Please do not share this OTP with anyone.<br>
+                                If you did not request this, please ignore this email.
+                            </p>
+                        </td>
+                    </tr>
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="padding:20px;background:linear-gradient(180deg, rgba(230,126,35,0.1) 0%, rgba(230,126,35,0.3) 100%);border-top:1px solid rgba(255,255,255,0.1)">
+                            <!-- Social Media -->
+                            <div style="margin-bottom:15px">
+                                <a href="https://instagram.com/project_sparkup" 
+                                   class="instagram-button preserve-light"
+                                   style="display:inline-flex;align-items:center;padding:8px 16px;border-radius:20px;font-family:'Montserrat',sans-serif;font-size:13px">
+                                    <img src="https://thegroup11.com/registration/images/image-1.png" alt="Instagram" style="width:16px;height:16px;margin-right:6px">
+                                    Follow us on Instagram
+                                </a>
+                            </div>
+                            <!-- Contact Info -->
+                            <div style="color:#ffffff;font-family:'Montserrat',sans-serif;font-size:12px;line-height:1.4">
+                                <p style="margin:3px 0">📧 support@thegroup11.com</p>
+                                <p style="margin:3px 0">📞 +91 9307026265</p>
+                            </div>
+                            <!-- Copyright -->
+                            <div style="margin-top:15px;padding-top:15px;border-top:1px solid rgba(255,255,255,0.1)">
+                                <p style="color:rgba(255,255,255,0.6);font-family:'Montserrat',sans-serif;font-size:11px;margin:0">
+                                    © 2025 Project SparkUp - TheGroup11. All rights reserved.
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

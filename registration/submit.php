@@ -29,10 +29,10 @@ try {
     }
 
     // Database configuration
-    $db_host = "localhost";
-    $db_name = "u265056410_registration";
-    $db_user = "u265056410_arya";
-    $db_pass = "Registration_SparkUp@123";
+    $db_host = "";
+    $db_name = "";
+    $db_user = "";
+    $db_pass = "";
 
     // Connect to database
     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);

@@ -814,3 +814,52 @@ input:focus, select:focus {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+/* ...existing code... */
+
+/* Terms and Conditions Checkbox Styles */
+.terms-checkbox-container {
+    margin: 2rem 0;
+    padding: 1rem;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.terms-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.terms-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.terms-label a {
+    color: var(--theme-blue);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.terms-label a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.checkbox-error {
+    color: #ff4444;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.terms-checkbox-container.error {
+    animation: errorShake 0.5s ease;
+    border: 1px solid #ff4444;
+}
+
+/* ...existing code... */

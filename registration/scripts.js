@@ -74,7 +74,7 @@ function generateQuestions() {
             `;
         }
 
-        // Then add fun fact textarea only to section 5
+        // Then add terms checkbox and fun fact textarea to section 5
         if(section === 5) {
             sectionDiv.innerHTML += `
                 <div class="form-group fun-fact-section">
@@ -84,6 +84,13 @@ function generateQuestions() {
                         placeholder="Tell us something unique about yourself (hobbies, achievements, interests...)"
                         rows="5"
                     ></textarea>
+                </div>
+                <div class="terms-checkbox-container">
+                    <label class="terms-label">
+                        <input type="checkbox" id="termsCheckbox" required>
+                        <span>I agree to the <a href="https://thegroup11.com/tnc" target="_blank">Terms & Conditions</a> and <a href="https://thegroup11.com/privacy" target="_blank">Privacy Policy</a></span>
+                    </label>
+                    <div class="checkbox-error" id="termsError"></div>
                 </div>
             `;
         }
@@ -216,6 +223,27 @@ function validateSection(section) {
         }
     }
     
+    // Add terms validation for section 5
+    if (section === 5) {
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        const termsContainer = document.querySelector('.terms-checkbox-container');
+        const termsError = document.getElementById('termsError');
+        
+        if (!termsCheckbox.checked) {
+            isValid = false;
+            termsContainer.classList.add('error');
+            termsError.style.display = 'block';
+            termsError.textContent = 'You must agree to the Terms & Conditions and Privacy Policy';
+            
+            if (!firstUnanswered) {
+                firstUnanswered = termsContainer;
+            }
+        } else {
+            termsContainer.classList.remove('error');
+            termsError.style.display = 'none';
+        }
+    }
+    
     // Scroll to the first unanswered question/field if validation fails
     if (!isValid && firstUnanswered) {
         setTimeout(() => {
@@ -285,6 +313,27 @@ function validateAllQuestions() {
         isValid = false;
         email.classList.add('error');
         if (!firstUnanswered) firstUnanswered = email;
+    }
+
+    // Add terms checkbox validation
+    const termsCheckbox = document.getElementById('termsCheckbox');
+    const termsContainer = document.querySelector('.terms-checkbox-container');
+    const termsError = document.getElementById('termsError');
+    
+    if (!termsCheckbox.checked) {
+        isValid = false;
+        termsContainer.classList.add('error');
+        termsError.style.display = 'block';
+        termsError.textContent = 'You must agree to the Terms & Conditions and Privacy Policy';
+        
+        if (!firstUnanswered) {
+            firstUnanswered = termsContainer;
+            // Show section 5 if terms aren't checked
+            document.querySelectorAll('.form-section').forEach(s => s.classList.add('hidden'));
+            document.getElementById('section5').classList.remove('hidden');
+            currentSection = 5;
+            updateProgress();
+        }
     }
 
     // Scroll to first unanswered question/field with a slight delay for better UX
@@ -506,5 +555,16 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // This will trigger the same validation behavior as other sections
         submitForm();
+    });
+
+    const termsCheckbox = document.getElementById('termsCheckbox');
+    termsCheckbox.addEventListener('change', function() {
+        const termsContainer = document.querySelector('.terms-checkbox-container');
+        const termsError = document.getElementById('termsError');
+        
+        if (this.checked) {
+            termsContainer.classList.remove('error');
+            termsError.style.display = 'none';
+        }
     });
 });
