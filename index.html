@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project SparkUp | Find Your Connection</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/notifications.css">
+    <link rel="stylesheet" href="css/form-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bebas+Neue&family=Comfortaa:wght@300;400;600;700&family=Orbitron:wght@400;600;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">Project SparkUp</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <!-- Login button removed -->
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="tagline animate-text">Friends,? maybe maybe-not..... mixed connections? <span class="highlight">Find your connection that sparks.</span></h1>
+            <div class="hero-buttons">
+                <!-- Register Soon button removed -->
+                <a href="#process" class="btn btn-secondary">Learn More</a>
+            </div>
+            <!-- Scroll Down animation removed -->
+        </div>
+        <div class="hero-overlay"></div>
+    </section>
+
+    <!-- Notify Section - Renamed from Register Soon -->
+    <section id="notify" class="notify-section">
+        <div class="container">
+            <h2>Join Our Waitlist</h2>
+            <p>Enter your email to be notified when Project SparkUp launches at our campus!</p>
+            
+            <!-- Countdown timer removed -->
+            
+            <div class="notify-form">
+                <!-- Added an ID for easier targeting and type="email" for better validation -->
+                <input type="email" id="notify-email" placeholder="Your VIT Email Address">
+                <!-- Added type="button" to prevent form submission behavior -->
+                <button type="button" class="btn btn-primary" id="notify-button">Notify Me</button>
+            </div>
+            
+            <p class="small-text">Only VIT institutional emails (@vit.edu) are eligible for this event.</p>
+        </div>
+    </section>
+
+    <!-- About SparkUp Section -->
+    <section class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>What is Project SparkUp?</h2>
+                <p>Reimagining campus connections through AI-powered matchmaking</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Students connecting and collaborating"  width="800" height="600" class="rounded-image">
+                </div>
+                <div class="about-text">
+                    <h3>AI-Powered Matchmaking for Real-World Connections</h3>
+                    <p>Project SparkUp is not a dating app. It's an innovative matchmaking platform designed specifically for college environments to facilitate meaningful face-to-face interactions between students.</p>
+                    <p>Using advanced personality analysis based on the Big Five traits, we create intentional matches that foster genuine connections among students with complementary traits and interests.</p>
+                    <p>Our structured 5-minute interactions help students overcome social anxiety while building valuable networking skills that last beyond college.</p>
+                    <a href="#process" class="btn btn-secondary">How It Works</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="process">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Project SparkUp Process</h2>
+                <p>Four simple steps to meaningful connections</p>
+            </div>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="process-number">1</div>
+                    <h3>Register with VIT Email</h3>
+                    <img src="register.png"  alt="Registration Form" class="process-image">
+                    <p>Complete a simple registration with your VIT email address, verified through a secure OTP process.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-number">2</div>
+                    <h3>Personality Assessment</h3>
+                    <img src="test.png" alt="Questionnaire" class="process-image">
+                    <p>Answer 20 questions based on the scientifically validated Big Five personality traits.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-number">3</div>
+                    <h3>QR Code Matching</h3>
+                    <br>
+                    <br>
+                    <img src="qr.png" alt="QR Code Scanning" class="process-image">
+                    <p>At the event, scan your match's QR code to verify and begin a timed 5-minute interaction.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="process-number">4</div>
+                    <h3>Provide Feedback</h3>
+                    <br>
+                    <br>
+                    <img src="feedback.png"  alt="Feedback Form" class="process-image">
+                    <p>After each conversation, provide quick feedback to unlock your match's contact information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Key Features</h2>
+                <p>What makes Project SparkUp different</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-qrcode"></i>
+                    <h3>Secure QR Verification</h3>
+                    <p>Our encrypted QR code system ensures privacy while verifying legitimate matches.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Timed Interactions</h3>
+                    <p>5-minute structured conversations eliminate awkwardness and ensure focused exchanges.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>AI Matching</h3>
+                    <p>Advanced algorithms match you with compatible peers based on personality and interests.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-lock"></i>
+                    <h3>Progressive Reveal</h3>
+                    <p>Contact information is only revealed after meeting and providing feedback.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Academic Focus</h3>
+                    <p>Find study partners, project collaborators, and peers with complementary skills.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Self-Improvement</h3>
+                    <p>Gain insights about your personality and communication style through feedback.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials section removed -->
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to make meaningful connections?</h2>
+            <p>Join the waitlist to be notified when Project SparkUp launches at our campus.</p>
+            <a href="#notify" class="btn btn-primary large">Join Waitlist</a>
+        </div>
+        <div class="cta-overlay"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Project SparkUp</h2>
+                    <p>Finding connections that spark.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <!-- Login link removed -->
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@projectsparkup.vit.edu</p>
+                    <p><i class="fas fa-phone"></i> +91 8605482342</p>
+                    <p><i class="fas fa-map-marker-alt"></i> VIT Campus, Vellore</p>
+                </div>
+                
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="https://instagram.com/projectsparkup" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                            <span class="social-label">Follow Us on Instagram</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Project SparkUp. All rights reserved.</p>
+                <p>A project by TheGroup11.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <!-- Uncomment the next line to enable test mode when database is not available -->
+    <!-- <script src="js/test-mode.js"></script> -->
+</body>
+</html>
